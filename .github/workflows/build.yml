@@ -27,3 +27,5 @@ jobs:
         uses: rtCamp/action-slack-notify@v2.0.1
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: Renegare Github Actions Container Build Complete ✅
+          SLACK_MESSAGE: Image has been built and pushed to https://hub.docker.com/r/renegare/github-action-container/tags?page=1&ordering=last_updated
