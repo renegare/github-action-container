@@ -14,12 +14,16 @@ jobs:
       IMAGE_NAME: renegare/github-action-container
     steps:
       - uses: actions/checkout@v2
-      - uses: whoan/docker-build-with-cache-action@v5
-        with:
-          username: "${{ secrets.DOCKER_USER }}"
-          password: "${{ secrets.DOCKER_PASS }}"
-          image_name: ${{ env.IMAGE_NAME }}
-          image_tag: latest,${{ github.sha }}
-          pull_image_and_stages: true
-          push_image_and_stages: true
-          push_image_tag: true
+      # - uses: whoan/docker-build-with-cache-action@v5
+      #   with:
+      #     username: "${{ secrets.DOCKER_USER }}"
+      #     password: "${{ secrets.DOCKER_PASS }}"
+      #     image_name: ${{ env.IMAGE_NAME }}
+      #     image_tag: latest,${{ github.sha }}
+      #     pull_image_and_stages: true
+      #     push_image_and_stages: true
+      #     push_image_tag: true
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2.0.1
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }
