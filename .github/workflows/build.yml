@@ -14,8 +14,6 @@ jobs:
       IMAGE_NAME: renegare/github-action-container
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{secrets.GITHUB_PAT}}
       - uses: whoan/docker-build-with-cache-action@v5
         id: build
         with:
