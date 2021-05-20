@@ -14,7 +14,10 @@ jobs:
       IMAGE_NAME: renegare/github-action-container
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{secrets.GITHUB_PAT}}
       - uses: whoan/docker-build-with-cache-action@v5
+        id: build
         with:
           username: "${{ secrets.DOCKER_USER }}"
           password: "${{ secrets.DOCKER_PASS }}"
@@ -23,9 +26,13 @@ jobs:
           pull_image_and_stages: true
           push_image_and_stages: true
           push_image_tag: true
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2.0.1
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_TITLE: Renegare Github Actions Container Build Complete ✅
-          SLACK_MESSAGE: Image has been built and pushed to https://hub.docker.com/r/renegare/github-action-container/tags?page=1&ordering=last_updated
+      - name: Summary
+        run: |
+          echo "Image Pushed: ${{steps.build.outputs.FULL_IMAGE_NAME}}"
+          echo "List of images: https://hub.docker.com/r/renegare/github-action-container/tags?page=1&ordering=last_updated"
+      # - name: Slack Notification
+      #   uses: rtCamp/action-slack-notify@v2.0.1
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     SLACK_TITLE: Renegare Github Actions Container Build Complete ✅
+      #     SLACK_MESSAGE: Image has been built and pushed to https://hub.docker.com/r/renegare/github-action-container/tags?page=1&ordering=last_updated
