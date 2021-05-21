@@ -14,6 +14,13 @@ ENV YQ_VERSION=3.4.1-r0
 RUN apk --no-cache --update add \
   bash=${BASH_VERSION} \
   yq=${YQ_VERSION}
+
+ENV NODEJS=12.22.1-r0
+RUN cat https://dl-cdn.alpinelinux.org/alpine/v3.13/main >> /etc/apk/repositories
+RUN cat https://dl-cdn.alpinelinux.org/alpine/v3.13/community >> /etc/apk/repositories
+RUN apk add --no-cache --update nodejs=${NODEJS} npm=${NODEJS}
+
+
 # RUN apk --no-cache --update add make~=${MAKE_VERSION} bash curl less groff jq \
 #   python py-pip build-base docker~=${DOCKER_VERSION} git~=${GIT_VERSION} \
 #   openssh~=${SSH_VERSION} \
