@@ -12,7 +12,7 @@ ENV JQ_VERSION=1.6-r1
 ENV KUBECTL_VERION=v1.15.0
 ENV LESS_VERSION=563-r0
 ENV MAKE_VERSION=4.3-r0
-ENV NODEJS_VERSION=12.22.1-r0
+ENV NODEJS_VERSION=14.16.1-r1
 ENV OPENSSH_VERSION=8.4_p1-r3
 ENV YQ_VERSION=3.4.1-r0
 
@@ -24,7 +24,8 @@ RUN echo https://dl-cdn.alpinelinux.org/alpine/v3.11/main >> /etc/apk/repositori
 RUN echo https://dl-cdn.alpinelinux.org/alpine/v3.11/community >> /etc/apk/repositories
 RUN apk --no-cache --update add \
   nodejs=${NODEJS_VERSION} \
-  npm=${NODEJS_VERSION}
+  npm=${NODEJS_VERSION} && \
+  npm i -g npm
 RUN apk --no-cache --update add \
   make=${MAKE_VERSION} \
   bash=${BASH_VERSION}
