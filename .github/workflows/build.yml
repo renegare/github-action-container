@@ -11,23 +11,27 @@ jobs:
     env:
       PULL_STAGES_LOG: pull-stages-output.log
       BUILD_LOG: build-output.log
-      IMAGE_NAME: renegare/github-action-container
+      DOCKER_USER: sdggroup
+      IMAGE_NAME: sdggroup/github-action-nodejs-container
     steps:
       - uses: actions/checkout@v2
-      - uses: whoan/docker-build-with-cache-action@v5
+      - name: build
+        uses: whoan/docker-build-with-cache-action@v5
         id: build
         with:
-          username: "${{ secrets.DOCKER_USER }}"
+          username: "${{ env.DOCKER_USER }}"
           password: "${{ secrets.DOCKER_PASS }}"
           image_name: ${{ env.IMAGE_NAME }}
           image_tag: latest,${{ github.sha }}
           pull_image_and_stages: true
           push_image_and_stages: true
           push_image_tag: true
+      - name: Versions
+        run: docker run --rm -a stdout --entrypoint=/bin/cat sdg-ganc:${{ github.sha }} /versions.txt
       - name: Summary
         run: |
-          echo "Image Pushed: ${{steps.build.outputs.FULL_IMAGE_NAME}}"
-          echo "List of images: https://hub.docker.com/r/renegare/github-action-container/tags?page=1&ordering=last_updated"
+          echo "Image Pushed: ${env.IMAGE_NAME}:${{ github.sha }}"
+          echo "List of images: https://hub.docker.com/r/${env.IMAGE_NAME}/tags?page=1&ordering=last_updated"
       # - name: Slack Notification
       #   uses: rtCamp/action-slack-notify@v2.0.1
       #   env:

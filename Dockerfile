@@ -57,29 +57,17 @@ RUN pip install --no-cache-dir --upgrade pip && \
   pip install --no-cache-dir awscli==1.19.77 && \
   mkdir /root/.aws
 
-# # RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERION}/bin/linux/amd64/kubectl && \
-# #   chmod +x ./kubectl && \
-# #   mv ./kubectl /usr/bin && \
-# #   curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.13.7/2019-06-11/bin/linux/amd64/aws-iam-authenticator && \
-# #   chmod +x ./aws-iam-authenticator && \
-# #   mv ./aws-iam-authenticator /usr/bin && \
-# #   curl -SsL https://downloads.gauge.org/stable | sh
-
-# # RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash && \
-# #   mv kustomize /usr/bin
-
-RUN printf "\n\n______________________________________________" && \
-  printf "\n----------------------------------------------" && \
-  printf "\n                INSTALLED VERSIONS            " && \
-  printf "\n----------------------------------------------" && \
-  printf "\n______________________________________________\n\n" && \
-  echo "AWS: `aws --version`" && \
-  echo "MAKE: `make -v`" && \
-  echo "DOCKER: `docker -v`" && \
-  echo "NODE JS: `node -v`" && \
-  echo "NPM: `npm -v`"
-#   # echo "KUBECTL: `kubectl version --client`" && \
-#   # echo "KUSTOMIZE: `kustomize version`" && \
-#   # echo "AWS IAM AUTH: `aws-iam-authenticator version`" && \
+RUN echo -en "______________________________________________\n\
+----------------------------------------------\n\
+                INSTALLED VERSIONS            \n\
+----------------------------------------------\n\
+______________________________________________\n\
+AWS: `aws --version`\n\
+MAKE: `make -v`\n\
+DOCKER: `docker -v`\n\
+NODE JS: `node -v`\n\
+NPM: `npm -v`\n" > /versions.txt && \
+cat /versions.txt
 
 ENTRYPOINT /bin/bash
+# CMD [ "-c", "/bin/cat /versions.txt" ]
