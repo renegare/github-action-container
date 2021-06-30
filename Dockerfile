@@ -15,6 +15,7 @@ ENV MAKE_VERSION=4.3-r0
 ENV NODEJS_VERSION=14.16.1-r1
 ENV OPENSSH_VERSION=8.4_p1-r3
 ENV YQ_VERSION=3.4.1-r0
+ENV NPM_VERSION=7
 
 RUN apk --no-cache --update add \
   bash=${BASH_VERSION} \
@@ -25,7 +26,7 @@ RUN echo https://dl-cdn.alpinelinux.org/alpine/v3.11/community >> /etc/apk/repos
 RUN apk --no-cache --update add \
   nodejs=${NODEJS_VERSION} \
   npm=${NODEJS_VERSION} && \
-  npm i -g npm
+  npm i -g npm@${NPM_VERSION}
 RUN apk --no-cache --update add \
   make=${MAKE_VERSION} \
   bash=${BASH_VERSION}
